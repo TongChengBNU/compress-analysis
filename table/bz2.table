@@ -1,0 +1,4 @@
+percentage(no padding),percentage(padding),overflow,compress(ms),decompress(ms),correctness(1/0)
+0.4257,0.4257,2.758e+04,0.17,0.232,1
+0.8792,0.8792,0.4267,0.202,0.235,1
+0.8977,0.8977,0.4569,0.227,0.26,1

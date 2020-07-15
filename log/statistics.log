@@ -1,0 +1,46 @@
+-------------LZW----------------
+cmd: bin/compress -v sequence/2 >> log/statistics.log 2>&1
+repeat: 1
+sequence/2:  -- replaced with sequence/2.Z Compression: 14.80%
+Usage time: 0.00026300s
+Padding: 0
+Overflow: .38254310344827586206
+cmd: bin/compress -d sequence/2.Z >> log/statistics.log 2>&1
+repeat: 1
+Usage time: 0.00023000s
+Comparison: (sequence/2, output/2.lzw) - identical.
+-------------ZIP----------------
+cmd: zip sequence/2.zip sequence/2 >> log/statistics.log 2>&1
+repeat: 1
+  adding: sequence/2 (deflated 27%)
+Usage time: 0.00020700s
+Padding: 0
+Overflow: .36637931034482758620
+cmd: unzip sequence/2.zip -d output/ >> log/statistics.log 2>&1
+repeat: 1
+Archive:  sequence/2.zip
+  inflating: output/sequence/2       
+Usage time: 0.00020800s
+Comparison: (sequence/2, output/2.zip) - identical.
+-------------gZIP----------------
+cmd: gzip -v sequence/2 >> log/statistics.log 2>&1
+repeat: 1
+sequence/2:	 27.1% -- replaced with sequence/2.gz
+Usage time: 0.00023200s
+Padding: 0
+Overflow: .20474137931034482758
+cmd: gzip -d sequence/2.gz >> log/statistics.log 2>&1
+repeat: 1
+Usage time: 0.00019200s
+Comparison: (sequence/2, output/2.gzip) - identical.
+-------------bZ----------------
+cmd: bzip2 -v sequence/2 >> log/statistics.log 2>&1
+repeat: 1
+  sequence/2:  1.114:1,  7.182 bits/byte, 10.23% saved, 1506 in, 1352 out.
+Usage time: 0.00022700s
+Padding: 0
+Overflow: .45689655172413793103
+cmd: bzip2 -d sequence/2.bz2 >> log/statistics.log 2>&1
+repeat: 1
+Usage time: 0.00026000s
+Comparison: (sequence/2, output/2.bz2) - identical.
