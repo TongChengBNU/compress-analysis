@@ -5,7 +5,7 @@
 
 int main(int argc, char* argv[]){
 	if(argc < 3){
-		fprintf(stderr, "Correct usage: test <data> <frame-size>");
+		fprintf(stderr, "Correct usage: %s <data> <frame-size>", argv[0]);
 		exit(1);
 	}
 	int FRAMESIZE = atoi(argv[2]);

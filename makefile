@@ -1,4 +1,4 @@
-all: cmpBinary timer2 timer parse split
+all: cmpBinary timer2 timer parse split extract
 
 cmpBinary: src/cmpBinary.c
 	gcc -o bin/cmpBinary src/cmpBinary.c
@@ -14,4 +14,7 @@ parse: src/regex.cpp
 
 split: src/split.c
 	gcc -o bin/split src/split.c
+
+extract: src/extract.c
+	gcc -o bin/extract src/extract.c
 
