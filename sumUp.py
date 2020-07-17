@@ -1,4 +1,4 @@
-#!/home/tongcheng/anaconda3/bin/python3
+#!/home/chengtong/Software/anaconda3/bin/python3
 import pandas as pd
 import sys
 
@@ -12,12 +12,17 @@ def parse(filepath):
     mean = df[['percentage(no padding)', 'percentage(padding)', 'overflow', 'compress(ms)', 'decompress(ms)']].mean()
     for _, val in mean.iteritems():
         rst.append(val)
+
+    # overflow has anomaly
+    tmp = df[df['overflow'] < 2.0].mean()
+    rst[2] = tmp['overflow']
+
     maxTime = df[['compress(ms)', 'decompress(ms)']].max()
     maxCps = maxTime['compress(ms)']
     maxDcps = maxTime['decompress(ms)']
     rst.insert(3, maxCps)
     rst.insert(5, maxDcps)
-    correct = len(df[df['correctness(1/0)']==1.0]) / len(df)
+    correct = len(df[df['correctness(1/0)']==1]) / len(df)
     rst.append(correct)
     rst.append(len(df))
     rst.insert(0, 1506)
@@ -29,11 +34,31 @@ def format(filepath):
     if data is not None:
         tplt1='{0:-^30}: {1:<10}'
         tplt2='{0:-^30}: {1:<.2%}'
+        tplt3='{0:-^30}: {1:<.2}'
+        index=0
         for name, val in zip(head, data):
-            if type(val) is int:
+            if index == 0:
                 print(tplt1.format(name, val))
-            else:
+            elif index == 1:
                 print(tplt2.format(name, val))
+            elif index == 2:
+                print(tplt2.format(name, val))
+            elif index == 3:
+                print(tplt2.format(name, val))
+            elif index == 4:
+                print(tplt3.format(name, val))
+            elif index == 5:
+                print(tplt3.format(name, val))
+            elif index == 6:
+                print(tplt3.format(name, val))
+            elif index == 7:
+                print(tplt3.format(name, val))
+            elif index == 8:
+                print(tplt2.format(name, val))
+            elif index == 9:
+                print(tplt1.format(name, val))
+
+            index=index+1
     else:
         print("Data error")
     return 
