@@ -60,7 +60,7 @@ def main():
         if(overflowVal == 0):
             ele = ele + '0' + ','
         else:
-            ele = ele + '{:.4}'.format(overflow) + ','
+            ele = ele + '{:.4}'.format(overflowVal) + ','
         tuple_container[i] = ele
 
     # compress, decompress time

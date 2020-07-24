@@ -1,47 +1,46 @@
 -------------LZW----------------
-cmd: bin/compress -v input/2 >> log/statistics.log 2>&1
+cmd: bin/compress -v sequence/2 >> log/statistics.log 2>&1
 repeat: 1
-input/2: No compression -- input/2 unchanged
-Usage time: 0.00019800s
-Padding: .92456896551724137931
+sequence/2:  -- replaced with sequence/2.Z Compression: 42.62%
+Usage time: 0.00019600s
+Padding: .06896551724137931034
 Overflow: 0
-cmd: bin/compress -d input/2.Z >> log/statistics.log 2>&1
+cmd: bin/compress -d sequence/2.Z >> log/statistics.log 2>&1
 repeat: 1
-input/2.Z: No such file or directory
-Usage time: 0.00019800s
-Comparison: (input/2.bk, input/2) - identical.
+Usage time: 0.00024400s
+Comparison: (sequence/2.bk, sequence/2) - identical.
 -------------ZIP----------------
-cmd: zip -D input/2.zip input/2 >> log/statistics.log 2>&1
+cmd: zip -D sequence/2.zip sequence/2 >> log/statistics.log 2>&1
 repeat: 1
-  adding: input/2 (stored 0%)
-Usage time: 0.00020500s
-Padding: .74784482758620689655
+  adding: sequence/2 (deflated 54%)
+Usage time: 0.00018800s
+Padding: .07112068965517241379
 Overflow: 0
-cmd: unzip input/2.zip >> log/statistics.log 2>&1
+cmd: unzip sequence/2.zip >> log/statistics.log 2>&1
 repeat: 1
-Archive:  input/2.zip
- extracting: input/2                 
-Usage time: 0.00024500s
-Comparison: (input/2.bk, input/2) - identical.
+Archive:  sequence/2.zip
+  inflating: sequence/2              
+Usage time: 0.00024100s
+Comparison: (sequence/2.bk, sequence/2) - identical.
 -------------gZIP----------------
-cmd: gzip -v input/2 >> log/statistics.log 2>&1
+cmd: gzip -v sequence/2 >> log/statistics.log 2>&1
 repeat: 1
-input/2:	 -4.3% -- replaced with input/2.gz
-Usage time: 0.00022300s
-Padding: .89978448275862068965
+sequence/2:	 54.1% -- replaced with sequence/2.gz
+Usage time: 0.00021100s
+Padding: .23275862068965517241
 Overflow: 0
-cmd: gzip -d input/2.gz >> log/statistics.log 2>&1
+cmd: gzip -d sequence/2.gz >> log/statistics.log 2>&1
 repeat: 1
-Usage time: 0.00020100s
-Comparison: (input/2.bk, input/2) - identical.
+Usage time: 0.00018700s
+Comparison: (sequence/2.bk, sequence/2) - identical.
 -------------bZ----------------
-cmd: bzip2 -v input/2 >> log/statistics.log 2>&1
+cmd: bzip2 -v sequence/2 >> log/statistics.log 2>&1
 repeat: 1
-  input/2:  0.534:1, 14.971 bits/byte, -87.14% saved, 70 in, 131 out.
-Usage time: 0.00025000s
-Padding: .85883620689655172413
+  sequence/2:  1.731:1,  4.622 bits/byte, 42.23% saved, 1506 in, 870 out.
+Usage time: 0.00020100s
+Padding: .06250000000000000000
 Overflow: 0
-cmd: bzip2 -d input/2.bz2 >> log/statistics.log 2>&1
+cmd: bzip2 -d sequence/2.bz2 >> log/statistics.log 2>&1
 repeat: 1
-Usage time: 0.00020300s
-Comparison: (input/2.bk, input/2) - identical.
+Usage time: 0.00023400s
+Comparison: (sequence/2.bk, sequence/2) - identical.

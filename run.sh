@@ -10,7 +10,7 @@ total=`expr $a - $offset`
 
 
 # init
-#./dependency.sh
+./dependency.sh
 echo '********RUN LOG**********\n\n' > $logPath
 
 name=1

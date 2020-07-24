@@ -1,24 +1,24 @@
-0%
-0%
--4.3%
--87.14%
-Padding: .92456896551724137931
-Padding: .74784482758620689655
-Padding: .89978448275862068965
-Padding: .85883620689655172413
+42.62%
+54%
+54.1%
+42.23%
+Padding: .06896551724137931034
+Padding: .07112068965517241379
+Padding: .23275862068965517241
+Padding: .06250000000000000000
 Overflow: 0
 Overflow: 0
 Overflow: 0
 Overflow: 0
-Usage time: 0.00019800s
-Usage time: 0.00019800s
-Usage time: 0.00020500s
-Usage time: 0.00024500s
-Usage time: 0.00022300s
+Usage time: 0.00019600s
+Usage time: 0.00024400s
+Usage time: 0.00018800s
+Usage time: 0.00024100s
+Usage time: 0.00021100s
+Usage time: 0.00018700s
 Usage time: 0.00020100s
-Usage time: 0.00025000s
-Usage time: 0.00020300s
-Comparison: (input/2.bk, input/2) - identical.
-Comparison: (input/2.bk, input/2) - identical.
-Comparison: (input/2.bk, input/2) - identical.
-Comparison: (input/2.bk, input/2) - identical.
+Usage time: 0.00023400s
+Comparison: (sequence/2.bk, sequence/2) - identical.
+Comparison: (sequence/2.bk, sequence/2) - identical.
+Comparison: (sequence/2.bk, sequence/2) - identical.
+Comparison: (sequence/2.bk, sequence/2) - identical.
