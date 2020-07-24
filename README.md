@@ -32,4 +32,6 @@ $ ls table/
 $ ./sumUp.py table/bz2.table
 ```
 
-
+## To be continued...
+padding makes nonsense;
+add feature about 算上补零位;

@@ -1,24 +1,24 @@
-14.80%
-27%
-27.1%
-10.23%
-Padding: 0
-Padding: 0
-Padding: 0
-Padding: 0
-Overflow: .38254310344827586206
-Overflow: .36637931034482758620
-Overflow: .20474137931034482758
-Overflow: .45689655172413793103
-Usage time: 0.00026300s
-Usage time: 0.00023000s
-Usage time: 0.00020700s
-Usage time: 0.00020800s
-Usage time: 0.00023200s
-Usage time: 0.00019200s
-Usage time: 0.00022700s
-Usage time: 0.00026000s
-Comparison: (sequence/2, output/2.lzw) - identical.
-Comparison: (sequence/2, output/2.zip) - identical.
-Comparison: (sequence/2, output/2.gzip) - identical.
-Comparison: (sequence/2, output/2.bz2) - identical.
+0%
+0%
+-4.3%
+-87.14%
+Padding: .92456896551724137931
+Padding: .74784482758620689655
+Padding: .89978448275862068965
+Padding: .85883620689655172413
+Overflow: 0
+Overflow: 0
+Overflow: 0
+Overflow: 0
+Usage time: 0.00019800s
+Usage time: 0.00019800s
+Usage time: 0.00020500s
+Usage time: 0.00024500s
+Usage time: 0.00022300s
+Usage time: 0.00020100s
+Usage time: 0.00025000s
+Usage time: 0.00020300s
+Comparison: (input/2.bk, input/2) - identical.
+Comparison: (input/2.bk, input/2) - identical.
+Comparison: (input/2.bk, input/2) - identical.
+Comparison: (input/2.bk, input/2) - identical.
