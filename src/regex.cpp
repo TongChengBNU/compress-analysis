@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
 		exit(1);
 	}
 
-	ifstream in(argv[1]);
+	ifstream in(argv[1]); // open input file
 	if(!in){
 		cerr << "Open file " << argv[1] << " error;" << endl;
 		exit(1);
@@ -64,7 +64,7 @@ int main(int argc, char* argv[]){
 vector<string> parse(string strValue){
 	smatch result;
 	vector<string> container;
-	regex pattern("[1-9][0-9]*.?[0-9]*%|unchanged");	
+	regex pattern("-*[1-9]*[0-9]*.?[0-9]*%|unchanged");	
 	string::const_iterator iterStart = strValue.begin();
 	string::const_iterator iterEnd = strValue.end();
 	while( regex_search(iterStart, iterEnd, result, pattern)){

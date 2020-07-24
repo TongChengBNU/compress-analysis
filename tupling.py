@@ -3,7 +3,7 @@ valLength=24 # length of val.log
 
 def percentageProcessor(line):
     rst = eval(line.split('%')[0])
-    rst = (100 - rst) / 100
+    rst = (100.0 - rst) / 100.0 # float arithematic
     return rst
 
 def paddingProcessor(line):
@@ -17,7 +17,7 @@ def overflowProcessor(line):
 def timeProcessor(line):
     line = line.split(' ')[-1]
     sec = eval(line.split('s')[0])
-    msec = 1000 * sec
+    msec = 1000.0 * sec
     return msec
 
 def cmpProcessor(line):
@@ -49,16 +49,16 @@ def main():
     for ele, i in zip(tuple_container, range(4)):
         padding = paddingProcessor(fd.readline())
         if(padding == 0):
-            ele = ele * 2 # copy percentage
+            ele = ele * 2 # copy no-padding percentage, type(ele)=str
         else:
             ele = ele + '{:.4}'.format(padding) + ','
         tuple_container[i] = ele
 
     # overflow
     for ele, i in zip(tuple_container, range(4)):
-        overflow = overflowProcessor(fd.readline())
-        if(overflow == 0):
-            ele = ele + '0'
+        overflowVal = overflowProcessor(fd.readline())
+        if(overflowVal == 0):
+            ele = ele + '0' + ','
         else:
             ele = ele + '{:.4}'.format(overflow) + ','
         tuple_container[i] = ele
@@ -78,6 +78,7 @@ def main():
         tuple_container[i] = ele
 
     fd.close()
+	# paths should be consistent with order in generate.sh
     paths = ('table/lzw.table', 'table/zip.table', 'table/gzip.table', 'table/bz2.table')
     for path, line in zip(paths, tuple_container):
         with open(path, 'a+') as fd:

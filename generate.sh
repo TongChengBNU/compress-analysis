@@ -1,10 +1,16 @@
 #!/bin/sh
 
-if [ $# != 1 ]
-then
-	echo "Usage: $0 <target>"
-	exit
+# functionality: 
+# 1. run compress-decompress cmd on <target-path>;
+# 2. dump raw output into log/statistics.log;
+
+if [ $# != 1 ]; then
+	echo "Usage: $0 <target-path>"
+	exit 1
 fi
+
+
+# overflow threshold
 standard=928
 
 cmpBin='bin/cmpBinary'
@@ -16,103 +22,113 @@ logDir='log/'
 binDir='bin/'
 
 logName='statistics.log'
-targetName=`echo $1 | sed -e 's/\// /g;' | awk '{print $NF}'`
-echo "Target: $1" # $1 is a path (full or relative)
-echo "targetName:" $targetName # $1 is a path (full or relative)
+#targetName=`echo $1 | sed -e 's/\// /g;' | awk '{print $NF}'`
+targetPath=$1
+targetName=${targetPath##*/}
+echo "Target: $targetPath" 
+echo "targetName:" $targetName 
 
-# LZW compression: 
-echo "-------------LZW----------------" > ${logDir}${logName}
-cpsCMD="$lzwBin -v $1 >> ${logDir}${logName} 2>&1"
-dcpsCMD="$lzwBin -d $1.Z >> ${logDir}${logName} 2>&1"
-cp $1 $1.bk # backup source data inplace
+
+# LZW compression
+# inplace compression and decompression; there might be no *.Z output if no compression occurs.
+echo "-------------LZW----------------" > ${logDir}${logName} # init log
+cpsCMD="$lzwBin -v $targetPath >> ${logDir}${logName} 2>&1"
+dcpsCMD="$lzwBin -d $targetPath.Z >> ${logDir}${logName} 2>&1"
+cp $targetPath $targetPath.bk # backup source data inplace
 $timeBin "$cpsCMD" 1 >> ${logDir}${logName} 2>&1
 # extract size of output
-if [ -e $1.Z ]
-then
-	size=`ls -l $1.Z | awk '{ print $5 }'`
+if [ -e $targetPath.Z ]; then
+	size=`ls -l ${targetPath}.Z | awk '{ print $5 }'`
 else
-	size=`ls -l $1 | awk '{ print $5 }'` # no compression
+	size=`ls -l $targetPath | awk '{ print $5 }'` # no compression
 fi
 # padding or prune
 if [ $size -ge $standard ]
 then
 	echo "Padding: 0" >> ${logDir}${logName} 
 	echo "Overflow: \c" >> ${logDir}${logName} 
-	echo "($size-928)/928" | bc -l >> ${logDir}${logName} 
+	echo "($size-${standard})/${standard}" | bc -l >> ${logDir}${logName} 
 else
 	echo "Padding: \c"  >> ${logDir}${logName} 
-	echo "(928-$size)/928" | bc -l >> ${logDir}${logName} 
+	echo "(${standard}-$size)/${standard}" | bc -l >> ${logDir}${logName} 
 	echo "Overflow: 0" >> ${logDir}${logName} 
 fi
 $timeBin "$dcpsCMD" 1 >> ${logDir}${logName} 2>&1
-mv $1 ${outputDir}${targetName}.lzw
-mv $1.bk $1
-$cmpBin $1 ${outputDir}${targetName}.lzw >> ${logDir}${logName} 
+$cmpBin ${targetPath}.bk ${targetPath} >> ${logDir}${logName} 
+rm ${targetPath}
+mv ${targetPath}.bk ${targetPath}
 
-# ZIP compression
+
+# zip compression
+# copy compression and decompression
 echo "-------------ZIP----------------" >> ${logDir}${logName}
-cpsCMD="zip $1.zip $1 >> ${logDir}${logName} 2>&1"
-dcpsCMD="unzip $1.zip -d $outputDir >> ${logDir}${logName} 2>&1"
+cpsCMD="zip -D ${targetPath}.zip $targetPath >> ${logDir}${logName} 2>&1" # -D: don't establish directory
+dcpsCMD="unzip ${targetPath}.zip >> ${logDir}${logName} 2>&1"
 $timeBin "$cpsCMD" 1 >> ${logDir}${logName} 2>&1
-size=`ls -l $1.zip | awk '{ print $5 }'`
+mv $targetPath $targetPath.bk
+size=`ls -l ${targetPath}.zip | awk '{ print $5 }'`
 if [ $size -ge $standard ]
 then
 	echo "Padding: 0" >> ${logDir}${logName} 
 	echo "Overflow: \c" >> ${logDir}${logName} 
-	echo "($size-928)/928" | bc -l >> ${logDir}${logName} 
+	echo "($size-${standard})/${standard}" | bc -l >> ${logDir}${logName} 
 else
 	echo "Padding: \c"  >> ${logDir}${logName} 
-	echo "(928-$size)/928" | bc -l >> ${logDir}${logName} 
+	echo "(${standard}-$size)/${standard}" | bc -l >> ${logDir}${logName} 
 	echo "Overflow: 0" >> ${logDir}${logName} 
 fi
 $timeBin "$dcpsCMD" 1 >> ${logDir}${logName} 2>&1
-mv $outputDir$1 $outputDir${targetName}.zip
-rm $1.zip
-$cmpBin $1 ${outputDir}${targetName}.zip >> ${logDir}${logName} 2>&1
+$cmpBin ${targetPath}.bk ${targetPath} >> ${logDir}${logName} 
+rm ${targetPath} ${targetPath}.zip
+mv ${targetPath}.bk ${targetPath}
+
 
 # gzip compression
+# inplace compression and decompression
 echo "-------------gZIP----------------" >> ${logDir}${logName}
-cpsCMD="gzip -v $1 >> ${logDir}${logName} 2>&1"
-dcpsCMD="gzip -d $1.gz >> ${logDir}${logName} 2>&1"
-cp $1 $1.bk
+cpsCMD="gzip -v $targetPath >> ${logDir}${logName} 2>&1"
+dcpsCMD="gzip -d $targetPath.gz >> ${logDir}${logName} 2>&1"
+cp $targetPath $targetPath.bk
 $timeBin "$cpsCMD" 1 >> ${logDir}${logName} 2>&1
-size=`ls -l $1.gz | awk '{ print $5 }'`
+size=`ls -l $targetPath.gz | awk '{ print $5 }'`
 if [ $size -ge $standard ]
 then
 	echo "Padding: 0" >> ${logDir}${logName} 
 	echo "Overflow: \c" >> ${logDir}${logName} 
-	echo "($size-928)/928" | bc -l >> ${logDir}${logName} 
+	echo "($size-${standard})/${standard}" | bc -l >> ${logDir}${logName} 
 else
 	echo "Padding: \c"  >> ${logDir}${logName} 
-	echo "(928-$size)/928" | bc -l >> ${logDir}${logName} 
+	echo "(${standard}-$size)/${standard}" | bc -l >> ${logDir}${logName} 
 	echo "Overflow: 0" >> ${logDir}${logName} 
 fi
 $timeBin "$dcpsCMD" 1 >> ${logDir}${logName} 2>&1
-mv $1 ${outputDir}${targetName}.gzip
-mv $1.bk $1
-$cmpBin $1 ${outputDir}${targetName}.gzip >> ${logDir}${logName} 2>&1
+$cmpBin ${targetPath}.bk ${targetPath} >> ${logDir}${logName} 
+rm ${targetPath}
+mv ${targetPath}.bk ${targetPath}
 
-# bz compression
+
+# bzip2 compression
+# inplace compression and decompression
 echo "-------------bZ----------------" >> ${logDir}${logName}
-cpsCMD="bzip2 -v $1 >> ${logDir}${logName} 2>&1"
-dcpsCMD="bzip2 -d $1.bz2 >> ${logDir}${logName} 2>&1"
-cp $1 $1.bk
+cpsCMD="bzip2 -v $targetPath >> ${logDir}${logName} 2>&1"
+dcpsCMD="bzip2 -d $targetPath.bz2 >> ${logDir}${logName} 2>&1"
+cp $targetPath $targetPath.bk
 $timeBin "$cpsCMD" 1 >> ${logDir}${logName} 2>&1
-size=`ls -l $1.bz2 | awk '{ print $5 }'`
+size=`ls -l $targetPath.bz2 | awk '{ print $5 }'`
 if [ $size -ge $standard ]
 then
 	echo "Padding: 0" >> ${logDir}${logName} 
 	echo "Overflow: \c" >> ${logDir}${logName} 
-	echo "($size-928)/928" | bc -l >> ${logDir}${logName} 
+	echo "($size-${standard})/${standard}" | bc -l >> ${logDir}${logName} 
 else
 	echo "Padding: \c"  >> ${logDir}${logName} 
-	echo "(928-$size)/928" | bc -l >> ${logDir}${logName} 
+	echo "(${standard}-$size)/${standard}" | bc -l >> ${logDir}${logName} 
 	echo "Overflow: 0" >> ${logDir}${logName} 
 fi
 $timeBin "$dcpsCMD" 1 >> ${logDir}${logName} 2>&1
-mv $1 ${outputDir}${targetName}.bz2
-mv $1.bk $1
-$cmpBin $1 ${outputDir}${targetName}.bz2 >> ${logDir}${logName} 2>&1
+$cmpBin ${targetPath}.bk ${targetPath} >> ${logDir}${logName} 
+rm ${targetPath}
+mv ${targetPath}.bk ${targetPath}
 
 
 
