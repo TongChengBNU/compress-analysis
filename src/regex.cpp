@@ -15,6 +15,7 @@
 using namespace std;
 
 vector<string> parse(string strValue);
+const string re_literal = "-*[1-9]*[0-9]*.?[0-9]*%|unchanged"; // search for output relating to compression rate
 
 int main(int argc, char* argv[]){
 	
@@ -64,7 +65,8 @@ int main(int argc, char* argv[]){
 vector<string> parse(string strValue){
 	smatch result;
 	vector<string> container;
-	regex pattern("-*[1-9]*[0-9]*.?[0-9]*%|unchanged");	
+	//regex pattern("-*[1-9]*[0-9]*.?[0-9]*%|unchanged");	
+	regex pattern(re_literal);	
 	string::const_iterator iterStart = strValue.begin();
 	string::const_iterator iterEnd = strValue.end();
 	while( regex_search(iterStart, iterEnd, result, pattern)){
