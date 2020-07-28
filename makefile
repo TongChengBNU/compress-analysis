@@ -18,3 +18,7 @@ split: src/split.c
 extract: src/extract.c
 	gcc -o bin/extract src/extract.c
 
+clean: 
+	rm -f bin/*
+	rm -rf sequence
+

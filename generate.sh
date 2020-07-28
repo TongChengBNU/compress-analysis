@@ -43,11 +43,9 @@ else
 	size=`ls -l $targetPath | awk '{ print $5 }'` # no compression
 fi
 # padding or prune
-if [ $size -ge $standard ]
-then
+if [ $size -ge $standard ]; then
 	echo "Padding: 0" >> ${logDir}${logName} 
-	echo "Overflow: \c" >> ${logDir}${logName} 
-	echo "($size-${standard})/${standard}" | bc -l >> ${logDir}${logName} 
+	echo "Overflow: 1" >> ${logDir}${logName} 
 else
 	echo "Padding: \c"  >> ${logDir}${logName} 
 	echo "(${standard}-$size)/${standard}" | bc -l >> ${logDir}${logName} 
@@ -67,11 +65,9 @@ dcpsCMD="unzip ${targetPath}.zip >> ${logDir}${logName} 2>&1"
 $timeBin "$cpsCMD" 1 >> ${logDir}${logName} 2>&1
 mv $targetPath $targetPath.bk
 size=`ls -l ${targetPath}.zip | awk '{ print $5 }'`
-if [ $size -ge $standard ]
-then
+if [ $size -ge $standard ]; then
 	echo "Padding: 0" >> ${logDir}${logName} 
-	echo "Overflow: \c" >> ${logDir}${logName} 
-	echo "($size-${standard})/${standard}" | bc -l >> ${logDir}${logName} 
+	echo "Overflow: 1" >> ${logDir}${logName} 
 else
 	echo "Padding: \c"  >> ${logDir}${logName} 
 	echo "(${standard}-$size)/${standard}" | bc -l >> ${logDir}${logName} 
@@ -91,11 +87,9 @@ dcpsCMD="gzip -d $targetPath.gz >> ${logDir}${logName} 2>&1"
 cp $targetPath $targetPath.bk
 $timeBin "$cpsCMD" 1 >> ${logDir}${logName} 2>&1
 size=`ls -l $targetPath.gz | awk '{ print $5 }'`
-if [ $size -ge $standard ]
-then
+if [ $size -ge $standard ]; then
 	echo "Padding: 0" >> ${logDir}${logName} 
-	echo "Overflow: \c" >> ${logDir}${logName} 
-	echo "($size-${standard})/${standard}" | bc -l >> ${logDir}${logName} 
+	echo "Overflow: 1" >> ${logDir}${logName} 
 else
 	echo "Padding: \c"  >> ${logDir}${logName} 
 	echo "(${standard}-$size)/${standard}" | bc -l >> ${logDir}${logName} 
@@ -115,11 +109,9 @@ dcpsCMD="bzip2 -d $targetPath.bz2 >> ${logDir}${logName} 2>&1"
 cp $targetPath $targetPath.bk
 $timeBin "$cpsCMD" 1 >> ${logDir}${logName} 2>&1
 size=`ls -l $targetPath.bz2 | awk '{ print $5 }'`
-if [ $size -ge $standard ]
-then
+if [ $size -ge $standard ]; then
 	echo "Padding: 0" >> ${logDir}${logName} 
-	echo "Overflow: \c" >> ${logDir}${logName} 
-	echo "($size-${standard})/${standard}" | bc -l >> ${logDir}${logName} 
+	echo "Overflow: 1" >> ${logDir}${logName} 
 else
 	echo "Padding: \c"  >> ${logDir}${logName} 
 	echo "(${standard}-$size)/${standard}" | bc -l >> ${logDir}${logName} 

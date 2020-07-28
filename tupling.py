@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/chengtong/Software/anaconda3/bin/python3
 valLength=24 # length of val.log
 
 def percentageProcessor(line):
@@ -6,13 +6,16 @@ def percentageProcessor(line):
     rst = (100.0 - rst) / 100.0 # float arithematic
     return rst
 
+# line format -- Name: XX\n
 def paddingProcessor(line):
     line = line.split("\n")[0]
     keyword = line.split(" ")[-1]
-    return eval(keyword)
+    return keyword
 
 def overflowProcessor(line):
-    return paddingProcessor(line)
+    line = line.split("\n")[0]
+    keyword = line.split(" ")[-1]
+    return keyword
 
 def timeProcessor(line):
     line = line.split(' ')[-1]
