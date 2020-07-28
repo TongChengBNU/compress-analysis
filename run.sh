@@ -34,7 +34,6 @@ total=`expr $a - $offset`
 
 
 # init
-./dependency # set up python interpreter and empty table/*
 echo '********RUN LOG**********\n\n' > $logPath
 
 name=1
