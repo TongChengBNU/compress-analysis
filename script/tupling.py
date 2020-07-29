@@ -1,4 +1,5 @@
 #!/home/chengtong/Software/anaconda3/bin/python3
+import argparse
 valLength=24 # length of val.log
 
 def percentageProcessor(line):
@@ -34,7 +35,12 @@ def cmpProcessor(line):
         return -1
 
 def main():
-    name = 'log/val.log'
+    parser = argparse.ArgumentParser()
+    parser.add_argument("logDir")
+    parser.add_argument("tableDir")
+    args = parser.parse_args()
+
+    name = args.logDir + '/val.log'
     fd = open(name, 'r')
     if (len(fd.readlines()) != valLength):
         print("Update table/ failed;(val.log too short)")
@@ -81,8 +87,15 @@ def main():
         tuple_container[i] = ele
 
     fd.close()
-	# paths should be consistent with order in generate.sh
-    paths = ('table/lzw.table', 'table/zip.table', 'table/gzip.table', 'table/bz2.table')
+
+    # paths should be consistent with order in generate.sh
+
+    paths = (
+            args.tableDir + '/lzw.table', 
+            args.tableDir + '/zip.table', 
+            args.tableDir + '/gzip.table', 
+            args.tableDir + '/bz2.table', 
+            )
     for path, line in zip(paths, tuple_container):
         with open(path, 'a+') as fd:
             fd.write(line)

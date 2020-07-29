@@ -4,8 +4,8 @@
 # 1. run compress-decompress cmd on <target-path>;
 # 2. dump raw output into log/statistics.log;
 
-if [ $# != 1 ]; then
-	echo "Usage: $0 <target-path>"
+if [ $# -ne 2 ]; then
+	echo "Usage: $0 <target-path> <logDir>"
 	exit 1
 fi
 
@@ -13,16 +13,14 @@ fi
 # overflow threshold
 standard=928
 
-cmpBin='bin/cmpBinary'
-timeBin='bin/timer2'
-lzwBin='bin/compress'
+binDir='../bin/'
+cmpBin=${binDir}'/cmpBinary'
+timeBin=${binDir}'/timer2'
+lzwBin=${binDir}'/compress'
 
-outputDir='output/'
-logDir='log/'
-binDir='bin/'
-
+logDir=$2
 logName='statistics.log'
-#targetName=`echo $1 | sed -e 's/\// /g;' | awk '{print $NF}'`
+
 targetPath=$1
 targetName=${targetPath##*/}
 echo "Target: $targetPath" 
@@ -125,6 +123,4 @@ mv ${targetPath}.bk ${targetPath}
 
 
 
-# Display statistics
-#rm ${outputDir}*
 echo "---------Finished-----------"

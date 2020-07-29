@@ -1,5 +1,4 @@
 #!/bin/sh
-# Usage: . auto.sh
 
 
 if [ $# -ne 2 ] || [ ! -d $1 ]; then
@@ -11,8 +10,14 @@ fi
 ./dependency.sh
 
 workDir=`pwd`
+seqSetDir=${workDir}/seqSet
+tableSetDir=${workDir}/tableSet
+logSetDir=${workDir}/logSet
+
 dataPath=`cd $1;pwd`
 frameSize=$2
+logPath=${workDir}/auto.log
+echo "Task,PID,Timestamp" > $logPath
 
 for filePath in ${dataPath}/*
 do
@@ -26,14 +31,21 @@ do
 	#	continue
 	#fi
 
+	# init
 	tmp=${filePath%.*}
 	baseName=${tmp##*/}
 	echo "Task:" ${baseName} "deployment begin---"
+	seqDir=${seqSetDir}/${baseName}-seq
+	mkdir $seqDir
+	tableDir=${tableSetDir}/${baseName}-seq
+	mkdir $seqDir
+	logDir=${logSetDir}/${baseName}-seq
+	mkdir $seqDir
+	bash ${workDir}/script/run.sh $filePath $frameSize $seqDir $tableDir $logDir & # run background
+	pid=$!
 
-
-
-	echo "Task:" ${baseName} "deployment finished---"
-	cd ..
+	echo "Task:" ${baseName} "deployment finished--- PID:" ${pid}
+	echo ${basename}","${pid}","`date` >> $logPath
 
 done
 

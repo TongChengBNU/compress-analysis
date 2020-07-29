@@ -1,10 +1,13 @@
 #!/bin/sh
 
-if [ $# -ne 2 ]; then
-	echo "Usage:" $0 "<dataPath>" "<frameSize>"
+if [ $# -ne 5 ]; then
+	echo "Usage:" $0 "<dataPath>" "<frameSize>" "<seqDir>" "<tableDir>" "logDir" 
 	echo "Please run dependency.sh before starting task!"
 	exit 1
 fi
+
+workDir=`pwd`
+./dependency.sh $4 $5
 
 target=$1
 frameSize=$2
@@ -14,18 +17,20 @@ if [ ! -e $target ]; then
 fi
 echo "Target:" $target "Begin ---------------"
 
-seqDir=`pwd`/"sequence"
+seqDir=$3
 if [ -d $seqDir ]; then
 	rm -f $seqDir/*
 else
 	mkdir $seqDir
 fi
 
-binDir=`pwd`/"bin"
 echo "Slice data Begin ----------"
-${binDir}/split $target $frameSize
+cd $seqDir
+split $target -b $frameSize -d
+cd $workDir
 
-logPath='log/run.log'
+logDir=$5
+logPath=${logDir}"/run.log"
 valLength=25 # length of log/val.log + 1 = output of parse.sh
              # validate intermediate result from parse.sh
 a=`ls -l $seqDir | wc -l`
@@ -37,8 +42,7 @@ total=`expr $a - $offset`
 echo '********RUN LOG**********\n\n' > $logPath
 
 name=1
-echo "-------Main loop begin------"
-echo ""
+echo "-------Main loop begin------\n"
 while [ $name -le $total ]; do
 	targetPath=$targetPath
 	echo '----------------------'
@@ -59,8 +63,7 @@ while [ $name -le $total ]; do
 		echo "Error: file $targetPath does not exist." >> $logPath
 	fi
 
-	#let 'name++'
-	name=`expr $name + 1`
+	let name+=1
 	echo ''
 done
 
