@@ -1,4 +1,6 @@
 
+
+
 # bin/compress -> ncompress
 # zip,gzip,bzip2 are default software in linux distribution
 # sudo apt install ncompress zip gzip bzip2
@@ -6,20 +8,33 @@
 
 Usage(){
 	cat << EOF
-./dependency.sh <tableDir> <logDir>
+./dependency.sh <seqDir> <tableDir> <logDir>
+Functionality: init <seqDir> <tableDir> <logDir>
 EOF
 }
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 3 ]; then
 	Usage
 	exit 1
 fi
 
-tableDir=$1
-logDir=$2
-if [ ! -d $tableDir ] || [ ! -d $logDir ]; then
-	echo "$tableDir or $logDir INVALID!!"
-	exit 2
+seqDir=$1
+tableDir=$2
+logDir=$3
+if [ -d $seqDir ]; then
+	rm -f $seqDir/*
+else
+	mkdir $seqDir
+fi
+if [ -d $tableDir ]; then
+	rm -f $tableDir/*
+else
+	mkdir $tableDir
+fi
+if [ -d $logDir ]; then
+	rm -f $logDir/*
+else
+	mkdir $logDir
 fi
 
 # init table/

@@ -20,5 +20,4 @@ extract: src/extract.c
 
 clean: 
 	rm -f bin/*
-	rm -rf sequence
-
+	./prepare.sh -f

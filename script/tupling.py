@@ -1,5 +1,6 @@
 #!/home/chengtong/Software/anaconda3/bin/python3
 import argparse
+import os
 valLength=24 # length of val.log
 
 def percentageProcessor(line):
@@ -40,8 +41,10 @@ def main():
     parser.add_argument("tableDir")
     args = parser.parse_args()
 
-    name = args.logDir + '/val.log'
-    fd = open(name, 'r')
+    inputPath = args.logDir + '/val.log'
+    logPath = os.path.abspath(inputPath)
+
+    fd = open(logPath, 'r')
     if (len(fd.readlines()) != valLength):
         print("Update table/ failed;(val.log too short)")
         return

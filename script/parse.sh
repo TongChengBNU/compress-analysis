@@ -6,13 +6,15 @@ if [ $# -ne 1 ]; then
 fi
 
 logDir=$1
-srcName='statistics.log'
-trgtName='val.log'
-../bin/parse ${logDir}${srcName} > ${logDir}${trgtName}
-grep 'Padding' ${logDir}${srcName} >> ${logDir}${trgtName}
-grep 'Overflow' ${logDir}${srcName} >> ${logDir}${trgtName}
-grep 'time' ${logDir}${srcName} >> ${logDir}${trgtName}
-grep 'Comparison' ${logDir}${srcName} >> ${logDir}${trgtName}
 
-echo "Content of ${logDir}${trgtName}-------------"
-cat ${logDir}${trgtName}
+srcPath=${logDir}'/statistics.log'
+trgtPath=${logDir}'/val.log'
+
+../bin/parse $srcPath > $trgtPath
+grep 'Padding' $srcPath >> $trgtPath
+grep 'Overflow' $srcPath >> $trgtPath
+grep 'time' $srcPath >> $trgtPath
+grep 'Comparison' $srcPath >> $trgtPath
+
+echo "Content of $trgtPath-------------"
+cat $trgtPath

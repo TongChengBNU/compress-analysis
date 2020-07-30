@@ -6,32 +6,54 @@ if [ $# -ne 5 ]; then
 	exit 1
 fi
 
-workDir=`pwd`
-./dependency.sh $4 $5
+#workDir=`pwd`
+workDir=$(cd "`dirname ${BASH_SOURCE}`"; pwd)
 
-target=$1
+
+absPath(){
+	if [ -d $1 ]; then
+		echo `cd $1; pwd`
+	elif [ -f $1 ]; then
+		base=`basename $1`
+		dir=`dirname $1`
+		absDir=`cd $dir; pwd`
+		echo $absDir"/"$base
+	else
+		echo $1
+	fi
+
+}
+target=`absPath $1`
 frameSize=$2
+seqDir=`absPath $3`
+tableDir=`absPath $4`
+logDir=`absPath $5`
+
+# $1 validation
 if [ ! -e $target ]; then
 	echo $1 "doesn't exist!"
 	exit 1
 fi
 echo "Target:" $target "Begin ---------------"
-
-seqDir=$3
-if [ -d $seqDir ]; then
-	rm -f $seqDir/*
-else
-	mkdir $seqDir
+# $3 $4 $5 validation
+bash ${workDir}/dependency.sh $seqDir $tableDir $logDir
+if [ $? -ne 0 ]; then
+	echo "Task: $target dependency error. Abort!"
+	exit 1
 fi
+
 
 echo "Slice data Begin ----------"
 cd $seqDir
 split $target -b $frameSize -d
+if [ $? -ne 0 ]; then
+	echo "Task: $target split error. Abort!"
+	exit 1
+fi
 cd $workDir
 
-logDir=$5
 logPath=${logDir}"/run.log"
-valLength=25 # length of log/val.log + 1 = output of parse.sh
+valLength=24 # length of log/val.log 
              # validate intermediate result from parse.sh
 a=`ls -l $seqDir | wc -l`
 offset=3 # total + . + .. = 3
@@ -41,32 +63,40 @@ total=`expr $a - $offset`
 # init
 echo '********RUN LOG**********\n\n' > $logPath
 
-name=1
 echo "-------Main loop begin------\n"
-while [ $name -le $total ]; do
-	targetPath=$targetPath
+for framePath in $seqDir/*; do
 	echo '----------------------'
-	echo "Target - $targetPath"
+	echo "Target - $framePath"
 	#echo "Name: $name, total: $total"
 	#check=`ls $seqDir$name 2>/dev/null`
-	if [ -e $targetPath ]
-	then
-		./generate.sh $targetPath > /dev/null
-		count=`./parse.sh | wc -l`
-		if [ $count -eq $valLength ]
-		then
-			./tupling.py
-		else
-			echo "Error: file $targetPath parse failed." >> $logPath
+	if [ -f $framePath ]; then
+		./generate.sh ${framePath} ${logDir} > /dev/null
+		if [ $? -ne 0 ]; then
+			echo "Error: file $framePath generate failed." >> $logPath
+			continue	
+		fi
+		./parse.sh $logDir > /dev/null
+		if [ $? -ne 0 ]; then
+			echo "Error: file $framePath parse failed." >> $logPath
+			continue	
+		fi
+		tmp=${logDir}'/val.log'
+		count=`cat $tmp | wc -l`
+		if [ $count -eq $valLength ]; then
+			./tupling.py $logDir $tableDir
+			if [ $? -ne 0 ]; then
+				echo "Error: file $framePath tupling failed." >> $logPath
+				continue	
+			fi
 		fi
 	else
-		echo "Error: file $targetPath does not exist." >> $logPath
+		echo "Error: file $framePath does not exist." >> $logPath
 	fi
 
-	let name+=1
 	echo ''
 done
 
+echo "****************************"
 echo "Run script finished." 
-echo "Plese check table/ for results and $logPath for error."
+echo -e "Plese check \n$tableDir\n for results and \n$logPath\n for error."
 

@@ -1,0 +1,189 @@
+---Compile Binary---
+Full prepare with compilation
+gcc -o bin/cmpBinary src/cmpBinary.c
+g++ -o bin/timer2 src/timer2.cpp
+gcc -o bin/timer src/timer.c
+g++ -o bin/parse src/regex.cpp
+gcc -o bin/split src/split.c
+gcc -o bin/extract src/extract.c
+
+---Set up python interpreter---
+Interperter for script: ./script/sumUp.py is set up.
+Interperter for script: ./script/tupling.py is set up.
+
+Directory: /home/chengtong/Projects/Compress/prune-cA/seqSet is cleaned.
+Directory: /home/chengtong/Projects/Compress/prune-cA/tableSet is cleaned.
+Directory: /home/chengtong/Projects/Compress/prune-cA/logSet is cleaned.
+
+/home/chengtong/Projects/Compress/prune-cA/data/2
+Task: 2 deployment begin---
+Task: 2 deployment finished--- PID: 30071
+/home/chengtong/Projects/Compress/prune-cA/data/3
+Task: 3 deployment begin---
+Task: 3 deployment finished--- PID: 30082
+/home/chengtong/Projects/Compress/prune-cA/data/4
+Task: 4 deployment begin---
+Task: 4 deployment finished--- PID: 30102
+Target: /home/chengtong/Projects/Compress/prune-cA/data/2 Begin ---------------
+/home/chengtong/Projects/Compress/prune-cA/data/5
+Task: 5 deployment begin---
+---Initialize /home/chengtong/Projects/Compress/prune-cA/tableSet/2-seq---
+---Initialize /home/chengtong/Projects/Compress/prune-cA/logSet/2-seq---
+Task: 5 deployment finished--- PID: 30128
+Target: /home/chengtong/Projects/Compress/prune-cA/data/3 Begin ---------------
+Slice data Begin ----------
+---Initialize /home/chengtong/Projects/Compress/prune-cA/tableSet/3-seq---
+---Initialize /home/chengtong/Projects/Compress/prune-cA/logSet/3-seq---
+Target: /home/chengtong/Projects/Compress/prune-cA/data/4 Begin ---------------
+-------Main loop begin------\n
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/2-seq/x00
+Slice data Begin ----------
+---Initialize /home/chengtong/Projects/Compress/prune-cA/tableSet/4-seq---
+---Initialize /home/chengtong/Projects/Compress/prune-cA/logSet/4-seq---
+Target: /home/chengtong/Projects/Compress/prune-cA/data/5 Begin ---------------
+Slice data Begin ----------
+-------Main loop begin------\n
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/3-seq/x00
+---Initialize /home/chengtong/Projects/Compress/prune-cA/tableSet/5-seq---
+---Initialize /home/chengtong/Projects/Compress/prune-cA/logSet/5-seq---
+-------Main loop begin------\n
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/4-seq/x00
+Slice data Begin ----------
+-------Main loop begin------\n
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/5-seq/x00
+Update table/ finished;
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/2-seq/x01
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/3-seq/x01
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/4-seq/x01
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/5-seq/x01
+Update table/ finished;
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/2-seq/x02
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/3-seq/x02
+Update table/ finished;
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/5-seq/x02
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/4-seq/x02
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/2-seq/x03
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/3-seq/x03
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/4-seq/x03
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/5-seq/x03
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/2-seq/x04
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/3-seq/x04
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/4-seq/x04
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/5-seq/x04
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/2-seq/x05
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/3-seq/x05
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/4-seq/x05
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/5-seq/x05
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/2-seq/x06
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/3-seq/x06
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/4-seq/x06
+Update table/ finished;
+
+----------------------
+Target - /home/chengtong/Projects/Compress/prune-cA/seqSet/5-seq/x06
+Update table/ finished;
+Update table/ finished;
+
+****************************
+Run script finished.
+Plese check 
+/home/chengtong/Projects/Compress/prune-cA/tableSet/2-seq
+ for results and 
+/home/chengtong/Projects/Compress/prune-cA/logSet/2-seq/run.log
+ for error.
+
+****************************
+Run script finished.
+Plese check 
+/home/chengtong/Projects/Compress/prune-cA/tableSet/3-seq
+ for results and 
+/home/chengtong/Projects/Compress/prune-cA/logSet/3-seq/run.log
+ for error.
+Update table/ finished;
+
+****************************
+Run script finished.
+Plese check 
+/home/chengtong/Projects/Compress/prune-cA/tableSet/4-seq
+ for results and 
+/home/chengtong/Projects/Compress/prune-cA/logSet/4-seq/run.log
+ for error.
+Update table/ finished;
+
+****************************
+Run script finished.
+Plese check 
+/home/chengtong/Projects/Compress/prune-cA/tableSet/5-seq
+ for results and 
+/home/chengtong/Projects/Compress/prune-cA/logSet/5-seq/run.log
+ for error.
