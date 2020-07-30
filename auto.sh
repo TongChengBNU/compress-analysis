@@ -51,15 +51,15 @@ do
 	echo "Task:" ${baseName} "deployment begin---"
 	seqDir=${seqSetDir}/${baseName}-seq
 	dirInit $seqDir
-	tableDir=${tableSetDir}/${baseName}-seq
+	tableDir=${tableSetDir}/${baseName}-table
 	dirInit $tableDir
-	logDir=${logSetDir}/${baseName}-seq
+	logDir=${logSetDir}/${baseName}-log
 	dirInit $logDir
-	bash ${workDir}/script/run.sh $filePath $frameSize $seqDir $tableDir $logDir & # run background
+	bash ${workDir}/script/run.sh $filePath $frameSize $seqDir $tableDir $logDir > /dev/null 2>&1 & # run background
 	pid=$!
 
 	echo "Task:" ${baseName} "deployment finished--- PID:" ${pid}
-	echo ${basename}","${pid}","`date` >> $logPath
+	echo ${baseName}","${pid}","`date` >> $logPath
 
 done
 

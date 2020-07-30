@@ -15,7 +15,7 @@ echo ""
 # set up python interpreter 
 echo "---Set up python interpreter---"
 pythonPath=`which python3`
-for script in ./script/*
+for script in ./script/* ./ps/*
 do
 	ext=${script##*.}	
 	if [ $ext = "py" ]; then
