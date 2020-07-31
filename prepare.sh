@@ -1,6 +1,7 @@
 #!/bin/sh
 
 
+workDir=$(cd `dirname $0`; pwd)
 
 # compile binary
 echo "---Compile Binary---"
@@ -15,8 +16,7 @@ echo ""
 # set up python interpreter 
 echo "---Set up python interpreter---"
 pythonPath=`which python3`
-for script in ./script/* ./ps/*
-do
+for script in ${workDir}/script/* ${workDir}/ps/*; do
 	ext=${script##*.}	
 	if [ $ext = "py" ]; then
 		sed -i "1c \#\!$pythonPath" $script
@@ -25,7 +25,7 @@ do
 done
 echo ""
 
-# prepare XXSet
+# make and clean XXSet
 clean(){
 	trgtDir=$1
 		if [ -d $trgtDir ]; then

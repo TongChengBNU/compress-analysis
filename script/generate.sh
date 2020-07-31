@@ -13,7 +13,7 @@ fi
 # overflow threshold
 standard=928
 
-workDir=`pwd` # XX/script
+workDir=$(cd `dirname $0`; pwd) # XX/script
 binDir=${workDir%/*}'/bin'
 cmpBin=${binDir}'/cmpBinary'
 timeBin=${binDir}'/timer2'
@@ -46,7 +46,7 @@ if [ $size -ge $standard ]; then
 	echo "Padding: 0" >> ${logPath} 
 	echo "Overflow: 1" >> ${logPath} 
 else
-	echo -e "Padding: \c"  >> ${logPath} 
+	echo -n "Padding: "  >> ${logPath} 
 	echo "(${standard}-$size)/${standard}" | bc -l >> ${logPath} 
 	echo "Overflow: 0" >> ${logPath} 
 fi
@@ -93,7 +93,7 @@ if [ $size -ge $standard ]; then
 	echo "Padding: 0" >> ${logPath} 
 	echo "Overflow: 1" >> ${logPath} 
 else
-	echo -e "Padding: \c"  >> ${logPath} 
+	echo -n "Padding: "  >> ${logPath} 
 	echo "(${standard}-$size)/${standard}" | bc -l >> ${logPath} 
 	echo "Overflow: 0" >> ${logPath} 
 fi
@@ -116,7 +116,7 @@ if [ $size -ge $standard ]; then
 	echo "Padding: 0" >> ${logPath} 
 	echo "Overflow: 1" >> ${logPath} 
 else
-	echo -e "Padding: \c"  >> ${logPath} 
+	echo -n "Padding: "  >> ${logPath} 
 	echo "(${standard}-$size)/${standard}" | bc -l >> ${logPath} 
 	echo "Overflow: 0" >> ${logPath} 
 fi
@@ -138,7 +138,7 @@ if [ $size -ge $standard ]; then
 	echo "Padding: 0" >> ${logPath} 
 	echo "Overflow: 1" >> ${logPath} 
 else
-	echo -e "Padding: \c"  >> ${logPath} 
+	echo -n "Padding: "  >> ${logPath} 
 	echo "(${standard}-$size)/${standard}" | bc -l >> ${logPath} 
 	echo "Overflow: 0" >> ${logPath} 
 fi

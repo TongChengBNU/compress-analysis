@@ -5,12 +5,14 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 
+workDir=$( cd `dirname $0`; pwd )
 logDir=$1
 
 srcPath=${logDir}'/statistics.log'
 trgtPath=${logDir}'/val.log'
 
-../bin/parse $srcPath > $trgtPath
+parseBin=${workDir%/*}/bin/parse
+$parseBin $srcPath > $trgtPath
 grep 'Padding' $srcPath >> $trgtPath
 grep 'Overflow' $srcPath >> $trgtPath
 grep 'time' $srcPath >> $trgtPath

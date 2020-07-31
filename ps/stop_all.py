@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/chengtong/Software/anaconda3/bin/python3
 import os
 
 # return pid str

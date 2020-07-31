@@ -6,15 +6,16 @@ if [ $# -ne 2 ] || [ ! -d $1 ]; then
 	exit 1
 fi
 
+workDir=$(cd `dirname $0`; pwd) # script directory
+
 # compile, set python interpreter 
 # init xxSet
-bash prepare.sh
-if [ $? -nq 0 ]; then
-	echo "./prepare.sh error. Abort!"
+bash ${workDir}/prepare.sh
+if [ $? -ne 0 ]; then
+	echo "prepare.sh error. Abort!"
 	exit 1
 fi
 
-workDir=`pwd`
 seqSetDir=${workDir}/seqSet
 tableSetDir=${workDir}/tableSet
 logSetDir=${workDir}/logSet
@@ -24,6 +25,8 @@ frameSize=$2
 logPath=${workDir}/auto.log
 echo "Task,PID,Timestamp" > $logPath
 
+# init directory to empty
+# dirInit $1
 dirInit(){
 	if [ -d $1 ]; then
 		rm -f $1/*
@@ -37,17 +40,16 @@ dirInit(){
 }
 
 # ---- Task Loop ------------
-for filePath in ${dataPath}/*
-do
-	echo $filePath
+for filePath in ${dataPath}/*; do
+	echo "Data Path:" $filePath
 	if [ ! -f $filePath ]; then
 		echo $filePath "is not a file."
-		continue
+		continue # goto next filePath
 	fi
 
 	# init
 	tmp=${filePath%.*}
-	baseName=${tmp##*/}
+	baseName=${tmp##*/} # neither extension nor directory, used for task naming
 	echo "Task:" ${baseName} "deployment begin---"
 	seqDir=${seqSetDir}/${baseName}-seq
 	dirInit $seqDir
@@ -63,3 +65,8 @@ do
 
 done
 
+
+# finish prompt
+echo ""
+echo "--------------------------------------------"
+echo -e "All deployments done! Please check\n${workDir}/auto.log\nfor process information."

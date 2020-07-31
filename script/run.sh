@@ -7,7 +7,7 @@ if [ $# -ne 5 ]; then
 fi
 
 #workDir=`pwd`
-workDir=$(cd "`dirname ${BASH_SOURCE}`"; pwd)
+workDir=$(cd "`dirname $0`"; pwd)
 
 
 absPath(){
@@ -70,12 +70,12 @@ for framePath in $seqDir/*; do
 	#echo "Name: $name, total: $total"
 	#check=`ls $seqDir$name 2>/dev/null`
 	if [ -f $framePath ]; then
-		./generate.sh ${framePath} ${logDir} > /dev/null
+		bash ${workDir}/generate.sh ${framePath} ${logDir} > /dev/null
 		if [ $? -ne 0 ]; then
 			echo "Error: file $framePath generate failed." >> $logPath
 			continue	
 		fi
-		./parse.sh $logDir > /dev/null
+		bash ${workDir}/parse.sh $logDir > /dev/null
 		if [ $? -ne 0 ]; then
 			echo "Error: file $framePath parse failed." >> $logPath
 			continue	
@@ -83,7 +83,7 @@ for framePath in $seqDir/*; do
 		tmp=${logDir}'/val.log'
 		count=`cat $tmp | wc -l`
 		if [ $count -eq $valLength ]; then
-			./tupling.py $logDir $tableDir
+			python3 ${workDir}/tupling.py $logDir $tableDir
 			if [ $? -ne 0 ]; then
 				echo "Error: file $framePath tupling failed." >> $logPath
 				continue	

@@ -1,4 +1,7 @@
-all: cmpBinary timer2 timer parse split extract
+all: cmpBinary timer2 timer parse split extract compress
+
+compress: lzw/compress
+	cp lzw/compress bin
 
 cmpBinary: src/cmpBinary.c
 	gcc -o bin/cmpBinary src/cmpBinary.c
