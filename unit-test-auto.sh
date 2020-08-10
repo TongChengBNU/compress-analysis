@@ -1,1 +1,1 @@
-. auto.sh ./data 10
+bash auto.sh ./data 10

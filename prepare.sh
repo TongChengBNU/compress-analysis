@@ -3,15 +3,6 @@
 
 workDir=$(cd `dirname $0`; pwd)
 
-# compile binary
-echo "---Compile Binary---"
-if [ "$1" = "-f" ]; then
-	echo "Fast prepare without compilation."
-else
-	echo "Full prepare with compilation"
-	make
-fi
-echo ""
 
 # set up python interpreter 
 echo "---Set up python interpreter---"
@@ -37,8 +28,20 @@ clean(){
 } 
 
 workDir=`pwd`
+echo "---Clean 4 directories---"
+pythonPath=`which python3`
+clean ${workDir}/bin
 clean ${workDir}/seqSet
 clean ${workDir}/tableSet
 clean ${workDir}/logSet
 echo ""
 
+# compile binary
+echo "---Compile Binary---"
+if [ "$1" = "-f" ]; then
+	echo "Fast prepare without compilation."
+else
+	echo "Full prepare with compilation"
+	make
+fi
+echo ""
