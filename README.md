@@ -32,7 +32,7 @@ This project aims to analyze the efficiency of 4 compression algorithms: lzw, zi
 ### single task
 `$ bash run.sh <dataPath> <framesize>`
 ##### implementation details of 'run.sh'
-```
+```mermaid
 graph TD
 Dep(dependency.sh) --> A[split]
 A -->|sequence/*| B[generate.sh]
@@ -47,7 +47,7 @@ E --> F[stdout]
 ### multiple concurrent tasks
 `$ bash auto.sh <dataDirPath> <framesize>`
 ##### implementation details of 'auto.sh'
-```
+```mermaid
 graph TD
 Prepare(prepare.sh) --> A[init auto.log title]
 A --> B{any more path?} 
