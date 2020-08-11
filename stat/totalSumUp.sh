@@ -13,11 +13,13 @@ echo '----------------------------------' > $logFile
 echo '-     Summary of total task      -' >> $logFile
 echo '----------------------------------' >> $logFile
 echo 'Date:' `date` >> $logFile
-echo '\n\n' >> $logFile
+echo -e "\n\n" >> $logFile
 
 tableSetPath=${workDir%/*}"/tableSet"
 scriptPath=${workDir%/*}"/script"
 
+echo "------Summary of TableSet Begin------"
+echo ""
 for dirName in ${tableSetPath}/*
 do
 	if [ ! -d $dirName ]; then
@@ -30,7 +32,9 @@ do
 	python3 ${scriptPath}/sumUp.py $dirName/gzip.table >> summary.log
 	python3 ${scriptPath}/sumUp.py $dirName/bz2.table >> summary.log
 
-	echo '\n\n' >> $logFile
+	echo -e "\n\n" >> $logFile
+	echo $dirName "finished..."
 done
 
+echo ""
 echo "Log:" $logFile "is ready!"
