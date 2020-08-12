@@ -1,4 +1,4 @@
-bash auto.sh ./data 10 # very fast
+bash auto.sh ./data 1506 # very fast
 echo ""
 
 for ((i=5;i>0;i-=1)); do
