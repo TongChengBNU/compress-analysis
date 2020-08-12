@@ -1,4 +1,4 @@
-#!/home/chengtong/Software/anaconda3/bin/python3
+#!/usr/bin/python3
 import argparse
 import os
 valLength=24 # length of val.log

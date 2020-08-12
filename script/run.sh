@@ -70,7 +70,7 @@ for framePath in $seqDir/*; do
 	#echo "Name: $name, total: $total"
 	#check=`ls $seqDir$name 2>/dev/null`
 	if [ -f $framePath ]; then
-		bash ${workDir}/generate.sh ${framePath} ${logDir} > /dev/null
+		bash ${workDir}/generate.sh ${framePath} ${logDir} ${frameSize} > /dev/null
 		if [ $? -ne 0 ]; then
 			echo "Error: file $framePath generate failed." >> $logPath
 			continue	

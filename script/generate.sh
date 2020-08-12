@@ -4,14 +4,15 @@
 # 1. run compress-decompress cmd on <target-path>;
 # 2. dump raw output into log/statistics.log;
 
-if [ $# -ne 2 ]; then
-	echo "Usage: $0 <target-path> <logDir>"
+if [ $# -ne 3 ]; then
+	echo "Usage: $0 <target-path> <logDir> <frameSize>"
 	exit 1
 fi
 
 
 # overflow threshold
 standard=928
+frameSize=$3
 
 workDir=$(cd `dirname $0`; pwd) # XX/script
 binDir=${workDir%/*}'/bin'
@@ -43,11 +44,12 @@ else
 fi
 # padding or prune
 if [ $size -ge $standard ]; then
-	echo "Padding: 0" >> ${logPath} 
+	echo -n "Padding: " >> ${logPath} 
+	echo "${size}/${frameSize}" | bc -l >> ${logPath} 
 	echo "Overflow: 1" >> ${logPath} 
 else
 	echo -n "Padding: "  >> ${logPath} 
-	echo "(${standard}-$size)/${standard}" | bc -l >> ${logPath} 
+	echo "${standard}/${frameSize}" | bc -l >> ${logPath} 
 	echo "Overflow: 0" >> ${logPath} 
 fi
 if [ -e $targetPath.Z ]; then
@@ -90,11 +92,12 @@ $timeBin "$cpsCMD" 1 >> ${logPath} 2>&1
 mv $targetName $targetName.bk
 size=`ls -l ${targetName}.zip | awk '{ print $5 }'`
 if [ $size -ge $standard ]; then
-	echo "Padding: 0" >> ${logPath} 
+	echo -n "Padding: " >> ${logPath} 
+	echo "${size}/${frameSize}" | bc -l >> ${logPath} 
 	echo "Overflow: 1" >> ${logPath} 
 else
 	echo -n "Padding: "  >> ${logPath} 
-	echo "(${standard}-$size)/${standard}" | bc -l >> ${logPath} 
+	echo "${standard}/${frameSize}" | bc -l >> ${logPath} 
 	echo "Overflow: 0" >> ${logPath} 
 fi
 $timeBin "$dcpsCMD" 1 >> ${logPath} 2>&1
@@ -113,11 +116,12 @@ cp $targetPath $targetPath.bk
 $timeBin "$cpsCMD" 1 >> ${logPath} 2>&1
 size=`ls -l $targetPath.gz | awk '{ print $5 }'`
 if [ $size -ge $standard ]; then
-	echo "Padding: 0" >> ${logPath} 
+	echo -n "Padding: " >> ${logPath} 
+	echo "${size}/${frameSize}" | bc -l >> ${logPath} 
 	echo "Overflow: 1" >> ${logPath} 
 else
 	echo -n "Padding: "  >> ${logPath} 
-	echo "(${standard}-$size)/${standard}" | bc -l >> ${logPath} 
+	echo "${standard}/${frameSize}" | bc -l >> ${logPath} 
 	echo "Overflow: 0" >> ${logPath} 
 fi
 $timeBin "$dcpsCMD" 1 >> ${logPath} 2>&1
@@ -128,18 +132,19 @@ mv ${targetPath}.bk ${targetPath}
 
 # bzip2 compression
 # inplace compression and decompression
-echo "-------------bZ----------------" >> ${logPath}
+echo "-------------bz2----------------" >> ${logPath}
 cpsCMD="bzip2 -v $targetPath >> ${logPath} 2>&1"
 dcpsCMD="bzip2 -d $targetPath.bz2 >> ${logPath} 2>&1"
 cp $targetPath $targetPath.bk
 $timeBin "$cpsCMD" 1 >> ${logPath} 2>&1
 size=`ls -l $targetPath.bz2 | awk '{ print $5 }'`
 if [ $size -ge $standard ]; then
-	echo "Padding: 0" >> ${logPath} 
+	echo -n "Padding: " >> ${logPath} 
+	echo "${size}/${frameSize}" | bc -l >> ${logPath} 
 	echo "Overflow: 1" >> ${logPath} 
 else
 	echo -n "Padding: "  >> ${logPath} 
-	echo "(${standard}-$size)/${standard}" | bc -l >> ${logPath} 
+	echo "${standard}/${frameSize}" | bc -l >> ${logPath} 
 	echo "Overflow: 0" >> ${logPath} 
 fi
 $timeBin "$dcpsCMD" 1 >> ${logPath} 2>&1
