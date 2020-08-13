@@ -87,4 +87,6 @@ $ bash unit-test-auto.sh
 
 
 ## To be continued...
-add feature about 算上补零位;
++ script/generate.sh standard is fixed but should be modified;
++ functionalize script/generate.sh
++ ps/ needs a progress bar script;
