@@ -61,7 +61,7 @@ total=`expr $a - $offset`
 
 
 # init
-echo '********RUN LOG**********\n\n' > $logPath
+echo -e "********RUN LOG**********\n\n" > $logPath
 
 echo "-------Main loop begin------\n"
 for framePath in $seqDir/*; do

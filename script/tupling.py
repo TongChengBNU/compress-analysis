@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 import argparse
 import os
-valLength=24 # length of val.log
+valLength=24 # length of val.log: 4*6
 
 def percentageProcessor(line):
-    rst = eval(line.split('%')[0])
-    rst = (100.0 - rst) / 100.0 # float arithematic
+    #rst = eval(line.split(' ')[-1])
+    #rst = (100.0 - rst) / 100.0 # float arithematic
     return rst
 
 # line format -- Name: XX\n
@@ -53,7 +53,8 @@ def main():
     tuple_container = [] 
     # compression ratio
     for _ in range(4):
-        percentage = percentageProcessor(fd.readline())
+        #percentage = percentageProcessor(fd.readline())
+        percentage = paddingProcessor(fd.readline())
         ele = '{:.4}'.format(percentage) + ','
         tuple_container.append(ele)
 

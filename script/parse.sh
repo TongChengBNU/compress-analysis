@@ -10,10 +10,12 @@ logDir=$1
 
 srcPath=${logDir}'/statistics.log'
 trgtPath=${logDir}'/val.log'
+#trgtPath=stdout
 
-parseBin=${workDir%/*}/bin/parse
-$parseBin $srcPath > $trgtPath
-grep 'Padding' $srcPath >> $trgtPath
+#parseBin=${workDir%/*}/bin/parse
+#$parseBin $srcPath > $trgtPath
+grep 'NoPadding' $srcPath > $trgtPath # clear old txt
+grep '^Padding' $srcPath >> $trgtPath
 grep 'Overflow' $srcPath >> $trgtPath
 grep 'time' $srcPath >> $trgtPath
 grep 'Comparison' $srcPath >> $trgtPath

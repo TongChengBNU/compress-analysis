@@ -36,12 +36,16 @@ cpsCMD="$lzwBin -v $targetPath >> ${logPath} 2>&1"
 dcpsCMD="$lzwBin -d $targetPath.Z >> ${logPath} 2>&1"
 cp $targetPath $targetPath.bk # backup source data inplace
 $timeBin "$cpsCMD" 1 >> ${logPath} 2>&1
+#$timeBin "$cpsCMD" 1 > /dev/null 2>&1
 # extract size of output
 if [ -e $targetPath.Z ]; then
 	size=`ls -l ${targetPath}.Z | awk '{ print $5 }'`
 else
 	size=`ls -l $targetPath | awk '{ print $5 }'` # no compression
 fi
+# no padding compression rate 
+echo -n "NoPadding: " >> ${logPath}
+echo "${size}/${frameSize}" | bc -l >> ${logPath} 
 # padding or prune
 if [ $size -ge $standard ]; then
 	echo -n "Padding: " >> ${logPath} 
@@ -89,8 +93,13 @@ echo "`pwd`" >> $logPath
 cpsCMD="zip -D ${targetName}.zip $targetName >> ${logPath} 2>&1" # -D: don't establish directory
 dcpsCMD="unzip ${targetName}.zip ${targetName} >> ${logPath} 2>&1"
 $timeBin "$cpsCMD" 1 >> ${logPath} 2>&1
+#$timeBin "$cpsCMD" 1 > /dev/null 2>&1
 mv $targetName $targetName.bk
 size=`ls -l ${targetName}.zip | awk '{ print $5 }'`
+# no padding compression rate 
+echo -n "NoPadding: " >> ${logPath}
+echo "${size}/${frameSize}" | bc -l >> ${logPath} 
+# padding or prune
 if [ $size -ge $standard ]; then
 	echo -n "Padding: " >> ${logPath} 
 	echo "${size}/${frameSize}" | bc -l >> ${logPath} 
@@ -114,7 +123,12 @@ cpsCMD="gzip -v $targetPath >> ${logPath} 2>&1"
 dcpsCMD="gzip -d $targetPath.gz >> ${logPath} 2>&1"
 cp $targetPath $targetPath.bk
 $timeBin "$cpsCMD" 1 >> ${logPath} 2>&1
+#$timeBin "$cpsCMD" 1 > /dev/null 2>&1
 size=`ls -l $targetPath.gz | awk '{ print $5 }'`
+# no padding compression rate 
+echo -n "NoPadding: " >> ${logPath}
+echo "${size}/${frameSize}" | bc -l >> ${logPath} 
+# padding or prune
 if [ $size -ge $standard ]; then
 	echo -n "Padding: " >> ${logPath} 
 	echo "${size}/${frameSize}" | bc -l >> ${logPath} 
@@ -137,7 +151,12 @@ cpsCMD="bzip2 -v $targetPath >> ${logPath} 2>&1"
 dcpsCMD="bzip2 -d $targetPath.bz2 >> ${logPath} 2>&1"
 cp $targetPath $targetPath.bk
 $timeBin "$cpsCMD" 1 >> ${logPath} 2>&1
+#$timeBin "$cpsCMD" 1 > /dev/null 2>&1
 size=`ls -l $targetPath.bz2 | awk '{ print $5 }'`
+# no padding compression rate 
+echo -n "NoPadding: " >> ${logPath}
+echo "${size}/${frameSize}" | bc -l >> ${logPath} 
+# padding or prune
 if [ $size -ge $standard ]; then
 	echo -n "Padding: " >> ${logPath} 
 	echo "${size}/${frameSize}" | bc -l >> ${logPath} 
