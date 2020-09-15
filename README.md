@@ -66,7 +66,7 @@ B --> |N| End(Prompt 'deployment finished.')
 ```bash
 # in directory: .
 $ bash prepare.sh
-$ cd script.sh
+$ cd script/
 # in directory: ./script
 $ bash unit-test.sh
 $ cd ..
