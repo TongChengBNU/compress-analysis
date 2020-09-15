@@ -1,7 +1,6 @@
 # parse summary.log into 4 CSVs(comma seperated values)
 
 import os
-from ipdb import set_trace
 map_keys = ('lzw', 'zip', 'gzip', 'bz2') # not used
 
 # header detection: ***** and skip null line
