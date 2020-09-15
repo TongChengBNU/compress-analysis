@@ -30,7 +30,7 @@ This project aims to analyze the efficiency of 4 compression algorithms: lzw, zi
 
 ## Description
 ### single task
-`$ bash run.sh <dataPath> <framesize>`
+`$ bash run.sh <dataPath> <framesize> <seqDir> <tableDir> <logDir>`
 ##### implementation details of 'run.sh'
 ```mermaid
 graph TD
